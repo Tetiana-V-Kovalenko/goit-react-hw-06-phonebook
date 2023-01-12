@@ -79,6 +79,5 @@ const FormPhonebook = () => {
 FormPhonebook.propTypes = {
   name: PropTypes.string,
   number: PropTypes.string,
-  onSubmitForm: PropTypes.func,
 };
 export default FormPhonebook;

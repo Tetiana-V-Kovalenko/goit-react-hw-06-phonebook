@@ -24,7 +24,6 @@ const Filter = () => {
   );
 };
 Filter.propTypes = {
-  query: PropTypes.string,
-  filterContact: PropTypes.func,
+  filter: PropTypes.string,
 };
 export default Filter;
