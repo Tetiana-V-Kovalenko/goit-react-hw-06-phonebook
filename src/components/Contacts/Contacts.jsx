@@ -1,31 +1,53 @@
 import css from './Contacts.module.css';
 import PropTypes from 'prop-types';
 import { deleteContact } from 'redux/contactsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Contacts = ({ contacts }) => {
+const Contacts = () => {
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.filter.filter);
+  const filterArr = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
   const dispatch = useDispatch();
   const onClickDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
   };
   return (
     <ul className={css.contactList}>
-      {contacts.map(({ name, id, number }) => {
-        return (
-          <li key={id} className={css.contactItem}>
-            <p>
-              {name} : {number}
-            </p>
-            <button
-              className={css.btnDelete}
-              type="button"
-              onClick={() => onClickDeleteContact(id)}
-            >
-              X
-            </button>
-          </li>
-        );
-      })}
+      {filter !== ''
+        ? filterArr.map(({ name, id, number }) => {
+            return (
+              <li key={id} className={css.contactItem}>
+                <p>
+                  {name} : {number}
+                </p>
+                <button
+                  className={css.btnDelete}
+                  type="button"
+                  onClick={() => onClickDeleteContact(id)}
+                >
+                  X
+                </button>
+              </li>
+            );
+          })
+        : contacts.map(({ name, id, number }) => {
+            return (
+              <li key={id} className={css.contactItem}>
+                <p>
+                  {name} : {number}
+                </p>
+                <button
+                  className={css.btnDelete}
+                  type="button"
+                  onClick={() => onClickDeleteContact(id)}
+                >
+                  X
+                </button>
+              </li>
+            );
+          })}
     </ul>
   );
 };
